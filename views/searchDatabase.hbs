@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Show Database App</title>
+    </head>
+
+    <body>
+        <h1>Search your database</h1>
+        <h2>what do you want to search by?</h2>
+
+        <form action = "/searchDatabase/searchByName" method ="POST">
+            <h3>Search by show name</h3>
+            <input type = "text" placeholder = "enter show name" name = "searchShowName" required>
+            <input type = "submit" value = "Insert Search Result">
+        </form>
+
+        <form action = "/searchDatabase/searchByGenre" method ="POST">
+            <h3>Search by genre</h3>
+            <input type = "text" placeholder = "enter show genre" name = "searchShowGenre" required>
+            <input type = "submit" value = "Insert Search Result">
+        </form>
+
+        <form action = "/searchDatabase/searchByRating" method ="POST">
+            <h3>Search by minimum rating</h3>
+            <input type = "text" placeholder = "enter rating" name = "searchShowRating" required>
+            <input type = "submit" value = "Insert Search Result">
+        </form>
+
+    </body>
+</html>
