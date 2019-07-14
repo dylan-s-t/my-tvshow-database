@@ -14,26 +14,24 @@ var pushEntry;
 // get url and send view
 router.post('/searchDatabase/searchByRating', (req, res) => {
     var db = utils.getDb();
-    mySearchEntry= req.body.searchShowRating;
+    mySearchEntry= parseFloat(req.body.searchShowRating);
 
-    db.collection('tvshows').find().toArray()
-        .then(result => {
-            console.log(result)
-            for (i = 0; i < result.length; i++) {
-                console.log(result[i].rating)
-                if(result[i].rating > mySearchEntry) {
-                    searchResultsArray.push(result[i])
-                }
-            }
-            if(searchResultsArray.length == 0) {
-                res.send('sorry, no results found.')
-            }
-            res.send(searchResultsArray)
-        })
-        .catch(error => {
-            console.log('could not return database items')
-            console.log(`error: ${error}`)
-        })
+    db.collection('tvshows').find( { "rating": { $gt: mySearchEntry }}).toArray()
+    .then(result => {
+        console.log(result)
+        
+        if (result.length == 0) {
+            res.send("Sorry, none found!");
+        } else {
+            res.render('searchResultDisplay.hbs', {
+                result: result
+            });
+        }
+    })
+    .catch(error => {
+        console.log('could not return database items')
+        console.log(`error: ${error}`)
+    })
 })
 
 //export router for use by app
