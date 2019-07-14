@@ -19,7 +19,7 @@ router.get('/addCapitalCities/:country', (req, res) => {
         db.collection('tvshows').find().toArray()
         .then(result => {
             let capitalId = result[result.length-1]._id;
-            db.collection('tvshows').update({ _id: capitalId },
+            db.collection('tvshows').updateOne({ _id: capitalId },
                 { $set:
                    {
                      network_capital: countryResult.name
@@ -37,7 +37,6 @@ router.get('/addCapitalCities/:country', (req, res) => {
         console.log(error);
         res.send(`Error: ${error}`);
     })
-    
 })
 
 //export router for use by app

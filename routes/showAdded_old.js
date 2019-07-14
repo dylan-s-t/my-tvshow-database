@@ -14,7 +14,7 @@ router.use(express.urlencoded({ extended: true})); // true allows complicated th
 
 // declare variables 
 var searchShow;
-var myShowData;
+var myShowData
 
 router.post('/showAdded', (req,res) => {
     var db = utils.getDb();
@@ -28,44 +28,52 @@ router.post('/showAdded', (req,res) => {
         let rating = showData.rating.average
         let image = showData.image.medium
         let country = showData.network.country.code
-        myShowData = {newId,name,genre,rating,image,country}
+        myShowData = {newId,name,rating,image}
         console.log(myShowData);
-          
-        db.collection('tvshows').find( { "id": newId } ).toArray()
-        .then(result => {
-            //console.log(result)
-            console.log('checking for duplicate entries')
-            console.log(result.length)
 
-            if (result.length == 0) {
-                db.collection('tvshows').insertOne({
-                    id: newId,
-                    name: name,
-                    rating: rating,
-                    image: image,
-                    genre: genre,
-                    country: country
-                    
-                }, (err, result) => {
-                    if(err) {
-                        res.send('unable to insert tv show');
-                    }
-                    res.render('showAdded.hbs', {
-                        showName: name,
-                        showGenre: genre,
-                        showRating: rating,
-                        showImage: image,
-                        showNetworkCountry: country
-                    });
-                })
-            } else {
-                res.send(`you have already logged ${name} in your database!`)
+        var alreadyAdded = false;
+
+        db.collection('tvshows').find().toArray()
+        .then(result => {
+            console.log(result)
+            
+            for (i = 0; i < result.length; i++) {
+                console.log(i);
+                if(result[i].id == newId) {
+                    //res.send(`you have already logged ${name} in your database!`)
+                    alreadyAdded = true;
+                }
             }
         })
         .catch(error => {
-            console.log(error);
-            res.send(`Error: ${error}`);
+            console.log('could not return database items')
         })
+        
+        if (alreadyAdded == false) {
+            db.collection('tvshows').insertOne({
+                id: newId,
+                name: name,
+                rating: rating,
+                image: image,
+                genre: genre,
+                country: country
+                
+            }, (err, result) => {
+                if(err) {
+                    res.send('unable to insert tv show');
+                }
+                res.render('showAdded.hbs', {
+                    showName: name,
+                    showGenre: genre,
+                    showRating: rating,
+                    showImage: image,
+                    showNetworkCountry: country
+                });
+            })
+        } else {
+            res.send(`you have already logged ${name} in your database!`)
+        }
+        
     })
     .catch(error => {
         console.log(error);

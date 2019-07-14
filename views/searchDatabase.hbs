@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Show Database App</title>
     </head>
-
+    {{>header}}
     <body>
         <h1>Search your database</h1>
         <h2>what do you want to search by?</h2>
@@ -12,20 +12,21 @@
         <form action = "/searchDatabase/searchByName" method ="POST">
             <h3>Search by show name</h3>
             <input type = "text" placeholder = "enter show name" name = "searchShowName" required>
-            <input type = "submit" value = "Insert Search Result">
+            <input type = "submit" value = "Search">
         </form>
 
         <form action = "/searchDatabase/searchByGenre" method ="POST">
             <h3>Search by genre</h3>
             <input type = "text" placeholder = "enter show genre" name = "searchShowGenre" required>
-            <input type = "submit" value = "Insert Search Result">
+            <input type = "submit" value = "Search">
         </form>
 
         <form action = "/searchDatabase/searchByRating" method ="POST">
             <h3>Search by minimum rating</h3>
             <input type = "text" placeholder = "enter rating" name = "searchShowRating" required>
-            <input type = "submit" value = "Insert Search Result">
+            <input type = "submit" value = "Search">
         </form>
-
     </body>
+    {{>navbar}}
+    {{>footer}}
 </html>
