@@ -2,12 +2,13 @@ const MongoClient = require('mongodb').MongoClient;
 
 var _db = null;
 
-var uri = "mongodb+srv://dbUser:dbUserxxx@cluster0-jkgzf.gcp.mongodb.net/test?retryWrites=true&w=majority"
+var uri = "mongodb+srv://dbUser:hBYvon2SasVuuBlm@cluster0-jkgzf.gcp.mongodb.net/test?retryWrites=true&w=majority";
 
 const init = function (callback) {
-    MongoClient.connect(uri, (err, client) => {
+    MongoClient.connect(uri,(err, client) => {
         if (err) {
-            return console.log('unable to connect to db');
+            return console.log('unable to connect to db'+err);
+            
         }
         _db = client.db('test');
         console.log("successfully connected to the mongodb cluster")
